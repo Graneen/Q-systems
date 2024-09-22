@@ -6,6 +6,7 @@ import {
   TextField,
   Chip,
   Paper,
+  Skeleton,
 } from '@mui/material';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -28,7 +29,7 @@ const generateJob = (index: number): JobData => {
   const cities = ["Кимры", "Дубна", "Рогачёво", "Конаково"];
 
   return {
-    title: `Вакансия ${index + 1}`,
+    title: `Вакансия №${index + 1}`,
     description: 'Описание вакансии...',
     salary: `${salaryStart.toLocaleString()} - ${salaryDelta.toLocaleString()} на руки`,
     city: cities[Math.floor(Math.random() * cities.length)],
@@ -36,7 +37,7 @@ const generateJob = (index: number): JobData => {
   };
 };
 
-const INITIAL_JOBS = Array.from({ length: 20 }, (_, index) => generateJob(index));
+const INITIAL_JOBS = Array.from({ length: 20 }, (_, i) => generateJob(i));
 
 const App: React.FC = () => {
   const [skills, setSkills] = useState<string[]>([]);
@@ -57,7 +58,7 @@ const App: React.FC = () => {
       setHasMore(false);
       return;
     }
-    const newJobs = Array.from({ length: 20 }, (_, index) => generateJob(jobs.length + index));
+    const newJobs = Array.from({ length: 20 }, (_, i) => generateJob(jobs.length + i));
     setJobs((prev) => [...prev, ...newJobs]);
   };
 
@@ -67,10 +68,10 @@ const App: React.FC = () => {
 
       <Box display="flex" sx={{ height: '100%' }}>
         <Box className="sidebar">
-          <Button variant="contained" color="primary" fullWidth>
+          <Button variant="contained" color="primary" sx={{ width: '30%'}}>
             Вакансии
           </Button>
-          <Button variant="contained" color="primary" fullWidth sx={{ marginTop: 2 }}>
+          <Button variant="contained" color="primary" sx={{ width: '30%', marginTop: 5 }}>
             Курсы
           </Button>
         </Box>
@@ -83,8 +84,9 @@ const App: React.FC = () => {
           </Box>
 
 
-          
+
           <Box className="finders" display="flex" alignItems="center" flexWrap="wrap">
+            <Box className="finderOne">
               <TextField
                 label="Навыки"
                 value={skillInput}
@@ -110,6 +112,8 @@ const App: React.FC = () => {
               <Button onClick={addSkillHandler} variant="contained" sx={{ marginLeft: 1 }}>
                 Добавить
               </Button>
+            </Box>
+            <Box className="finderTwo">
               <TextField
                 label="Город"
                 value={city}
@@ -122,6 +126,7 @@ const App: React.FC = () => {
                 Найти
               </Button>
             </Box>
+          </Box>
 
 
           <Box className="content">
@@ -130,18 +135,18 @@ const App: React.FC = () => {
               dataLength={jobs.length}
               next={fetchMoreData}
               hasMore={hasMore}
-              loader={<h4>Загрузка...</h4>}
+              loader={<Skeleton />}
             >
               <Box className="job-container">
                 {jobs.map((job, index) => (
                   <Paper key={index} elevation={2} className="job-card">
-                    <Typography variant="h6">{job.title}</Typography>
+                    <Typography variant="h5">{job.title}</Typography>
                     <Typography variant="body2">{job.description}</Typography>
                     <div className="salaryWithAgeChip">
-                      <Typography variant="body1" color="primary">
+                      <Typography variant="body1" color="black">
                         {job.salary}
                       </Typography>
-                      <Chip label="Опыт 3-6 лет" color="success" variant="contained" />
+                      <Chip label="Опыт 3-6 лет" sx={{ backgroundColor: '#e0f7fa', borderRadius: '5px' }} />
                     </div>
                     <Typography variant="body1">
                       {job.city}

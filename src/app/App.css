@@ -12,14 +12,22 @@ body {
   width: 25%;
   height: 100vh;
   background-color: white;
-  padding: 20px;
 }
 .finders {
   height: 100px;
-  padding-left: 20px;
-  background-color: rgb(234, 234, 234);
+  background-color: #adadad;
+  gap: 10px;
 }
 
+.finderOne {
+ background-color: #d7d4d4;
+ padding: 10px;
+}
+
+.finderTwo {
+  background-color: #d7d4d4;
+  padding: 10px;
+ }
 
 .rightbar {
   width: 80%;
@@ -29,11 +37,13 @@ body {
 .content {
   height: 100%;
   background-color: #adadad;
-  padding: 20px;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 .salaryWithAgeChip {
   display: flex;
   flex-wrap: wrap;
+  align-items: baseline;
   gap: 10px;
 }
 
